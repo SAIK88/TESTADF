@@ -1,0 +1,41 @@
+{
+	"name": "PL_STORE_PROC",
+	"properties": {
+		"description": "this activity is to trigger USP_PRODUCT stored proc",
+		"activities": [
+			{
+				"name": "ETL_STORED_PROC",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[USP_Product1]",
+					"storedProcedureParameters": {
+						"productid": {
+							"value": "1350",
+							"type": "Int32"
+						},
+						"productname": {
+							"value": "d",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "linkedService1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-15T18:57:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,90 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_DATASPLIT",
+						"type": "DatasetReference"
+					},
+					"name": "Source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Province",
+						"type": "DatasetReference"
+					},
+					"name": "AB"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Province",
+						"type": "DatasetReference"
+					},
+					"name": "BC"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Province",
+						"type": "DatasetReference"
+					},
+					"name": "Others"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          province as string,",
+				"          FSA as string,",
+				"          POSTALCODE as string,",
+				"          hex_count as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Source",
+				"Source derive(DATE = currentDate()) ~> derivedColumn1",
+				"derivedColumn1 split(province=='AB',",
+				"     province=='BC',",
+				"     disjoint: false) ~> split1@(ProvinceAB, provinceBC, provinceremaining)",
+				"split1@ProvinceAB sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['AB'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> AB",
+				"split1@provinceBC sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['BC'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> BC",
+				"split1@provinceremaining sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Others'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> Others"
+			]
+		}
+	}
+}

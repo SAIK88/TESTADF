@@ -1,0 +1,24 @@
+{
+	"name": "PL_Execute",
+	"properties": {
+		"description": "This p",
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Filter",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-19T17:41:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

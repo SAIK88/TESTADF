@@ -1,0 +1,9 @@
+{
+	"name": "saikadf1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d91306a5-14b9-46e1-a16a-086aec6dd100",
+		"tenantId": "1880cc54-7b2f-40cb-88dd-d4f1c2e20740"
+	}
+}

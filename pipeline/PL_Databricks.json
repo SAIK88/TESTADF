@@ -1,0 +1,31 @@
+{
+	"name": "PL_Databricks",
+	"properties": {
+		"description": "this activity isto trigger particular notebook to schedule",
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dude1988@gmail.com/sample"
+				},
+				"linkedServiceName": {
+					"referenceName": "DS_DATABRICKS",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-18T17:55:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

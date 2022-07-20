@@ -1,0 +1,24 @@
+{
+	"name": "PL_Validation",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data Validation",
+				"type": "Validation",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_SQL",
+						"type": "DatasetReference"
+					},
+					"timeout": "0.00:00:10",
+					"sleep": 3
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-18T17:55:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

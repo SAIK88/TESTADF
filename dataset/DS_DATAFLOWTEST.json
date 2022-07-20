@@ -1,0 +1,23 @@
+{
+	"name": "DS_DATAFLOWTEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DATAFLOW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "DATAFLOWTEST",
+				"fileSystem": "1472022"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

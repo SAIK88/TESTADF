@@ -1,0 +1,135 @@
+{
+	"name": "DS_JSON_VALIDATION",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "00000000000000000030.json",
+				"folderPath": "1672022",
+				"fileSystem": "1472022"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"commitInfo": {
+					"type": "object",
+					"properties": {
+						"timestamp": {
+							"type": "integer"
+						},
+						"userId": {
+							"type": "string"
+						},
+						"userName": {
+							"type": "string"
+						},
+						"operation": {
+							"type": "string"
+						},
+						"operationParameters": {
+							"type": "object",
+							"properties": {
+								"mode": {
+									"type": "string"
+								},
+								"partitionBy": {
+									"type": "string"
+								}
+							}
+						},
+						"job": {
+							"type": "object",
+							"properties": {
+								"jobId": {
+									"type": "string"
+								},
+								"jobName": {
+									"type": "string"
+								},
+								"runId": {
+									"type": "string"
+								},
+								"jobOwnerId": {
+									"type": "string"
+								},
+								"triggerType": {
+									"type": "string"
+								}
+							}
+						},
+						"notebook": {
+							"type": "object",
+							"properties": {
+								"notebookId": {
+									"type": "string"
+								}
+							}
+						},
+						"clusterId": {
+							"type": "string"
+						},
+						"readVersion": {
+							"type": "integer"
+						},
+						"isolationLevel": {
+							"type": "string"
+						},
+						"isBlindAppend": {
+							"type": "boolean"
+						},
+						"operationMetrics": {
+							"type": "object",
+							"properties": {
+								"numFiles": {
+									"type": "string"
+								},
+								"numOutputBytes": {
+									"type": "string"
+								},
+								"numOutputRows": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"add": {
+					"type": "object",
+					"properties": {
+						"path": {
+							"type": "string"
+						},
+						"partitionValues": {
+							"type": "object",
+							"properties": {
+								"ACTIVITY_DATE": {
+									"type": "string"
+								}
+							}
+						},
+						"size": {
+							"type": "integer"
+						},
+						"modificationTime": {
+							"type": "integer"
+						},
+						"dataChange": {
+							"type": "boolean"
+						},
+						"stats": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
