@@ -1,0 +1,47 @@
+{
+	"name": "DS_SCDTYPETARGET",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SCDTYPE1services",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Ckey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Cname",
+				"type": "varchar"
+			},
+			{
+				"name": "location",
+				"type": "varchar"
+			},
+			{
+				"name": "Inserteddate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "updatedate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tarcustomer"
+		}
+	}
+}

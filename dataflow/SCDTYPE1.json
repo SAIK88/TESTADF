@@ -1,0 +1,63 @@
+{
+	"name": "SCDTYPE1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SRCCUSTOMER",
+						"type": "DatasetReference"
+					},
+					"name": "SRCCUST"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SCDTYPETARGET",
+						"type": "DatasetReference"
+					},
+					"name": "TARGETCUST"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "SCDDERIVED"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CId as integer,",
+				"          Cname as string,",
+				"          location as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCCUST",
+				"source(output(",
+				"          Ckey as integer,",
+				"          CId as integer,",
+				"          Cname as string,",
+				"          location as string,",
+				"          Inserteddate as timestamp,",
+				"          updatedate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> TARGETCUST",
+				"SRCCUST, TARGETCUST lookup(SRCCUST@CId == TARGETCUST@CId,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc(TARGETCUST@CId, true),",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 derive(Inserteddate = iif(isNull(Inserteddate),currentTimestamp(),Inserteddate),",
+				"          updatedate = currentTimestamp()) ~> SCDDERIVED"
+			]
+		}
+	}
+}

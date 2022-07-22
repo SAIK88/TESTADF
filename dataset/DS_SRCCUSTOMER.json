@@ -1,0 +1,30 @@
+{
+	"name": "DS_SRCCUSTOMER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SCDTYPE1services",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Cname",
+				"type": "varchar"
+			},
+			{
+				"name": "location",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "srccustomer"
+		}
+	}
+}
