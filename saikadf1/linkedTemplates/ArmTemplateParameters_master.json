@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "saikadf1"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"DS_DATABRICKS_accessToken": {
+			"value": ""
+		},
+		"LS_DATAFLOW_accountKey": {
+			"value": ""
+		},
+		"LS_SCDTYPE1services_connectionString": {
+			"value": ""
+		},
+		"LS_Serviceprincipal_servicePrincipalKey": {
+			"value": ""
+		},
+		"linkedService1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://saikdl.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://saikdl.dfs.core.windows.net/"
+		},
+		"LS_DATAFLOW_properties_typeProperties_url": {
+			"value": "https://saikdl.dfs.core.windows.net/"
+		},
+		"LS_Serviceprincipal_properties_typeProperties_serviceEndpoint": {
+			"value": "https://saikblb.blob.core.windows.net/"
+		},
+		"LS_Serviceprincipal_properties_typeProperties_tenant": {
+			"value": "1880cc54-7b2f-40cb-88dd-d4f1c2e20740"
+		},
+		"LS_Serviceprincipal_properties_typeProperties_servicePrincipalId": {
+			"value": "37b5a440-cb1e-4aba-b741-a1df38ae915f"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

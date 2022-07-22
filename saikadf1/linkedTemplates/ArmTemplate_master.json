@@ -1,0 +1,153 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "saikadf1"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
+		},
+		"DS_DATABRICKS_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'DS_DATABRICKS'"
+		},
+		"LS_DATAFLOW_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_DATAFLOW'"
+		},
+		"LS_SCDTYPE1services_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SCDTYPE1services'"
+		},
+		"LS_Serviceprincipal_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'LS_Serviceprincipal'"
+		},
+		"linkedService1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linkedService1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saikdl.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saikdl.dfs.core.windows.net/"
+		},
+		"LS_DATAFLOW_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saikdl.dfs.core.windows.net/"
+		},
+		"LS_Serviceprincipal_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://saikblb.blob.core.windows.net/"
+		},
+		"LS_Serviceprincipal_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "1880cc54-7b2f-40cb-88dd-d4f1c2e20740"
+		},
+		"LS_Serviceprincipal_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "37b5a440-cb1e-4aba-b741-a1df38ae915f"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "saikadf1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureDataLakeStorage2_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					},
+					"DS_DATABRICKS_accessToken": {
+						"value": "[parameters('DS_DATABRICKS_accessToken')]"
+					},
+					"LS_DATAFLOW_accountKey": {
+						"value": "[parameters('LS_DATAFLOW_accountKey')]"
+					},
+					"LS_SCDTYPE1services_connectionString": {
+						"value": "[parameters('LS_SCDTYPE1services_connectionString')]"
+					},
+					"LS_Serviceprincipal_servicePrincipalKey": {
+						"value": "[parameters('LS_Serviceprincipal_servicePrincipalKey')]"
+					},
+					"linkedService1_connectionString": {
+						"value": "[parameters('linkedService1_connectionString')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
+					},
+					"LS_DATAFLOW_properties_typeProperties_url": {
+						"value": "[parameters('LS_DATAFLOW_properties_typeProperties_url')]"
+					},
+					"LS_Serviceprincipal_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('LS_Serviceprincipal_properties_typeProperties_serviceEndpoint')]"
+					},
+					"LS_Serviceprincipal_properties_typeProperties_tenant": {
+						"value": "[parameters('LS_Serviceprincipal_properties_typeProperties_tenant')]"
+					},
+					"LS_Serviceprincipal_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('LS_Serviceprincipal_properties_typeProperties_servicePrincipalId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "saikadf1_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'saikadf1_ArmTemplate_0')]"
+			]
+		}
+	]
+}
