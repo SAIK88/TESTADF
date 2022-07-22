@@ -19,13 +19,24 @@
 					"name": "TARGETCUST"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SCDTYPETARGET",
+						"type": "DatasetReference"
+					},
+					"name": "TARGET"
+				}
+			],
 			"transformations": [
 				{
 					"name": "lookup1"
 				},
 				{
 					"name": "SCDDERIVED"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -56,7 +67,34 @@
 				"     asc(TARGETCUST@CId, true),",
 				"     broadcast: 'auto')~> lookup1",
 				"lookup1 derive(Inserteddate = iif(isNull(Inserteddate),currentTimestamp(),Inserteddate),",
-				"          updatedate = currentTimestamp()) ~> SCDDERIVED"
+				"          updatedate = currentTimestamp()) ~> SCDDERIVED",
+				"SCDDERIVED alterRow(upsertIf(true())) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Ckey as integer,",
+				"          CId as integer,",
+				"          Cname as string,",
+				"          location as string,",
+				"          Inserteddate as timestamp,",
+				"          updatedate as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['CId'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CId = SRCCUST@CId,",
+				"          Cname = SRCCUST@Cname,",
+				"          location = SRCCUST@location,",
+				"          Inserteddate,",
+				"          updatedate",
+				"     )) ~> TARGET"
 			]
 		}
 	}
