@@ -1,0 +1,95 @@
+{
+	"name": "dataflow5",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DLSRCCSVSCD",
+						"type": "DatasetReference"
+					},
+					"name": "SRCSCDCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "DL_TARGETCSVSCD",
+						"type": "DatasetReference"
+					},
+					"name": "TARGETCSVSCD"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DL_TARGETCSVSCD",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "SCDDERIVED"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CID as string,",
+				"          {CNAME } as string,",
+				"          LOCATION as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SRCSCDCSV",
+				"source(output(",
+				"          {CID } as string,",
+				"          CNAME as string,",
+				"          LOCATION as string,",
+				"          InsertDate as string,",
+				"          UpdateDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TARGETCSVSCD",
+				"SRCSCDCSV, TARGETCSVSCD lookup(CID == {CID },",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc({CID }, false),",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 derive(InsertDate = iif(isNull(InsertDate),currentDate(),toDate(InsertDate,'YYYY-MM-DD')),",
+				"          UpdateDate = currentDate()) ~> SCDDERIVED",
+				"SCDDERIVED alterRow(upsertIf(true())) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {CID } as string,",
+				"          CNAME as string,",
+				"          LOCATION as string,",
+				"          InsertDate as string,",
+				"          UpdateDate as string",
+				"     ),",
+				"     partitionFileNames:['TARGET CUSTOMER.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          {CID },",
+				"          CNAME,",
+				"          LOCATION = SRCSCDCSV@LOCATION,",
+				"          InsertDate,",
+				"          UpdateDate",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
